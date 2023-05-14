@@ -172,14 +172,41 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3" id="change-item-cart">
+                    <!-- Start add to cart -->
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <!-- Start add products to cart -->
+                            @if (Auth::guest())
+                                <li><a onclick="alert('To view transaction history, please login to your account')"
+                                        href="{{ url('/login') }}"><i class="fa fa-history"></i>
+                                </li>
+                            @else
+                                <li><a href="{{ route('transactionHistory') }}"><i class="fa fa-history"></i></a>
+                                </li>
+                            @endif
+
+                            <li><a href="{{ route('shoppingCart') }}"><i class="fa fa-shopping-bag"></i>
+                                    @if (Session::has('cart'))
+                                        <span>{{ Session::get('cart')->totalQty }}</span>
+                                    @else
+                                        <span>0</span>
+                                    @endif
+                                </a>
+                            </li>
+                            <!-- End add product to cart -->
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <!-- Start display price -->
+                        @if (Session::has('cart'))
+                            <div class="header__cart__price">item:
+                                <span>${{ Session::get('cart')->totalPrice }}</span>
+                            </div>
+                        @else
+                            <div class="header__cart__price">item: <span>$0</span></div>
+                        @endif
+                        <!-- End display price -->
                     </div>
+                    <!-- End add to cart -->
                 </div>
             </div>
             <div class="humberger__open">

@@ -38,5 +38,12 @@ Route::get('/about-us', [PageControlleroller::class, 'about_us']);
 require __DIR__.'/auth.php';
 //Contact
 Route::get('/contact', [PageController::class, 'contact']);
+// Add products to cart
+Route::get('add-to-cart/{id}', [ProductController::class, 'getAddToCart'])->name('product.addToCart');
+Route::get('shopping-cart', [ProductController::class, 'getCart'])->name('shoppingCart');
+//Transaction history
+Route::get('transaction-history', [ProductController::class, 'transactionHistory'])->name('transactionHistory');
+Route::get('transaction-detail/{id}', [ProductController::class, 'transactionDetail'])->name('transactionDetail');
 // Search
 Route::get('search', [ProductController::class, 'getSearch'])->name('search');
+
