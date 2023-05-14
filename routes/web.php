@@ -4,6 +4,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductDetailsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,12 @@ Route::get('/contact', [PageController::class, 'contact']);
 // Add products to cart
 Route::get('add-to-cart/{id}', [ProductController::class, 'getAddToCart'])->name('product.addToCart');
 Route::get('shopping-cart', [ProductController::class, 'getCart'])->name('shoppingCart');
+// Add to cart form page ShopDetails and ShopGrid
+Route::get('{detailGrid?}/add-to-cart/{id}', [ProductController::class, 'addToCartDetailGrid'])->name('addToCart');
+Route::get('/shop-details/{id}', [ProductDetailsController::class, 'product_detail'])->name('shop.details');
+Route::get('/shop-details/{id}', [ProductController::class, 'product_detail']);
+Route::get('{mul?}/add-to-cart-mul/{id}/{quantity}', [ProductController::class, 'addToCartMul']);
+
 //Transaction history
 Route::get('transaction-history', [ProductController::class, 'transactionHistory'])->name('transactionHistory');
 Route::get('transaction-detail/{id}', [ProductController::class, 'transactionDetail'])->name('transactionDetail');
