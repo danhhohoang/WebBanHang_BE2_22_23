@@ -152,7 +152,6 @@ class ProductController extends Controller
             'totalPrice' => $cart->totalPrice,
         ]);
     }
-
     public function addToCartDetailGrid(Request $request, $detailGrid, $id)
     {
         $product = Product::find($id);
@@ -188,15 +187,8 @@ class ProductController extends Controller
             ->orderBy('products.name', 'desc')
             ->take(20)
             ->get();
-<<<<<<< HEAD
-
-
         return view(
             'user.shop-details',
-=======
-       return view(
-            'shop-details',
->>>>>>> 963625afd3e54f820890deb91db631cab0e8657d
             [
                 'productDetail' => $detail,
                 'getType' => $type,
@@ -206,6 +198,7 @@ class ProductController extends Controller
     }
     function drid(Request $request)
     {
+
         //Get product
         $url = $request->path();
         $type = explode('/', $url);
@@ -301,8 +294,8 @@ class ProductController extends Controller
                 'sort' => $ordersort,
             ]
         );
-}
- public function deleteItemCart(Request $request, $id)
+    }
+    public function deleteItemCart(Request $request, $id)
     {
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $newCart = new Cart($oldCart);
@@ -315,7 +308,4 @@ class ProductController extends Controller
         }
         return view('user.deleteCart');
     }
-
-
-       
 }
