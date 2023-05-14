@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('user.index');
-});
+Route::get('/', [ProductController::class, 'index'])->name('index');
 
 Route::get('/dashboard', function () {
     return view('admin.index');
