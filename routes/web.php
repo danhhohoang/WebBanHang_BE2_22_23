@@ -38,3 +38,5 @@ Route::get('/about-us', [PageControlleroller::class, 'about_us']);
 require __DIR__.'/auth.php';
 //Contact
 Route::get('/contact', [PageController::class, 'contact']);
+// Search
+Route::get('search', [ProductController::class, 'getSearch'])->name('search');
