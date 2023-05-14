@@ -4,32 +4,26 @@
     <section class="categories">
         <div class="container">
             <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Latest Products</h2>
+                    </div>
                 <div class="categories__slider owl-carousel">
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
-                            <h5><a href="#">Fresh Fruit</a></h5>
+                    @foreach ($getNewProduct as $row)
+                        <?php $img = '/img/product/' . $row->image1; ?>
+                        <div class="col-lg-3">
+                            <div class="categories__item product__discount__item__pic set-bg"
+                                data-setbg="{{ URL::asset($img) }}">
+                                <?php if ($row->sales > 0) :?>
+                                <div class="product__discount__percent">-{{ $row->sales }}%</div>
+                                <?php endif ?>
+                                <?php $id = '/shop-details/' . $row->id; ?>
+                                <h5><a style="font-size: 14px!important; background-color: #7fad39"
+                                        href="{{ URL($id) }}"><?php echo substr($row->name, 0, 20); ?>...</a></h5>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
-                            <h5><a href="#">Dried Fruit</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
-                            <h5><a href="#">Vegetables</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
+                    @endforeach
+                </div>
                 </div>
             </div>
         </div>
