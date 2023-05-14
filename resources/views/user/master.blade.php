@@ -7,12 +7,15 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Ogani | Template</title>
+    <link rel="icon" href="{{ asset('/img/link-logo.png') }}">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/elegant-icons.css') }}" type="text/css">
@@ -21,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+    <script src="https://kit.fontawesome.com/42ee89e4a1.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -120,22 +125,19 @@
                             </div>
                             <div class="header__top__right__auth d-flex">
                                 @if (Route::has('login'))
-                                    @auth
-                                        <a href="{{ url('/profile') }}"
-                                            class="text-sm text-gray-700 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
-                                        <a style="display: inline; padding-left: 5px;" href="{{ route('logout') }}">
-                                            <i class="fa fa-btn fa-sign-out"></i>
-                                        </a>
-                                    @else
-                                        <a href="{{ route('login') }}"
-                                            class="text-sm text-gray-700 dark:text-gray-500 underline">Log
-                                            in</a>
+                                @auth
+                                <a href="{{ url('/profile') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
+                                <a style="display: inline; padding-left: 5px;" href="{{ route('logout') }}">
+                                    <i class="fa fa-btn fa-sign-out"></i>
+                                </a>
+                                @else
+                                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
+                                    in</a>
 
-                                        @if (Route::has('register'))
-                                            <a href="{{ route('register') }}"
-                                                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                                        @endif
-                                    @endauth
+                                @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                                @endif
+                                @endauth
                                 @endif
                             </div>
                         </div>
@@ -165,8 +167,7 @@
                             </li>
                             <li><a href="./blog.html">Blog</a></li>
                             <!-- Contac cua danh -->
-                            <li <?php if ($nameURL == "contact") { ?> class="active" <?php } ?>><a
-                                    href="{{ url('/contact') }}">Contact</a></li>
+                            <li <?php if ($nameURL == "contact") { ?> class="active" <?php } ?>><a href="{{ url('/contact') }}">Contact</a></li>
                             <!-- Contac cua danh -->
                         </ul>
                     </nav>
@@ -216,7 +217,9 @@
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
-    <section class="hero">
+    <section class="hero <?php if ($nameURL != 'index.php') {
+                                echo 'hero-normal';
+                            } ?>">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
@@ -226,29 +229,20 @@
                             <span>All departments</span>
                         </div>
                         <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
+                            <li><a href="{{ url('shop-grid') }}">All Categories</a></li>
+                            @foreach ($getProtypes as $value)
+                            <?php $urlID = 'shop-grid/' . $value['id']; ?>
+                            <li><a href="{{ url($urlID) }}"><?php echo $value['name']; ?></a>
+                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
+                            <form action="{{ route('search') }}" method="get">
+                                <input type="text" placeholder="What do you need?" name="key" value="@if(isset($_GET['key'])) {{$_GET['key']}}@endif">
                                 <button type="submit" class="site-btn">SEARCH</button>
                             </form>
                         </div>
@@ -262,23 +256,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
-                        <div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
+                    <?php if ($nameURL == "index.php") {
+                    ?>
+                        <div class="hero__item set-bg" data-setbg="{{ asset('/img/hero/banner.jpg') }}">
+                            <div class="hero__text">
+                                <span>FRUIT FRESH</span>
+                                <h2>Vegetable <br />100% Organic</h2>
+                                <p>Free Pickup and Delivery Available</p>
+                                <a href="#" class="primary-btn">SHOP NOW</a>
+                            </div>
                         </div>
-                    </div>
+                    <?php
+                    } ?>
                 </div>
             </div>
         </div>
     </section>
     <!-- Hero Section End -->
 
-    {{-- Content --}}
     @yield('content')
-    {{-- End --}}
 
     <!-- Footer Section Begin -->
     <footer class="footer spad">
@@ -287,10 +283,10 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="{{ url('/') }}"><img src="{{ asset('/img/logo.png') }}" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
+                            <li>Address: <a class="text-dark" href="https://www.google.com/maps/place/60-49 Road 11378 New York" target="_blank">60-49 Road 11378 New York</a></li>
                             <li>Phone: +65 11.188.888</li>
                             <li>Email: hello@colorlib.com</li>
                         </ul>
@@ -300,20 +296,13 @@
                     <div class="footer__widget">
                         <h6>Useful Links</h6>
                         <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
+                            <li><a href="{{ url('/about-us') }}">About Us</a></li>
+                            <li><a href="{{ url('/contact') }}">Contact</a></li>
+                            <li><a href="">My Account</a></li>
                         </ul>
                         <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="">Shopping Cart</a></li>
+                            <li><a href="{{ url('/checkout') }}">Checkout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -321,16 +310,11 @@
                     <div class="footer__widget">
                         <h6>Join Our Newsletter Now</h6>
                         <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your mail">
+                        <form action="{}" method="post">
+                            @csrf
+                            <input type="email" name="email" placeholder="Enter your mail" required>
                             <button type="submit" class="site-btn">Subscribe</button>
                         </form>
-                        <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -343,7 +327,9 @@
                                 Copyright &copy;
                                 <script>
                                     document.write(new Date().getFullYear());
-                                </script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                </script> All rights reserved | This template is made with <i 
+                                class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" 
+                                target="_blank">Colorlib</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>
                         </div>
@@ -356,14 +342,21 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.nice-select.min.js') }}"></script>
-    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.slicknav.js') }}"></script>
-    <script src="{{ asset('js/mixitup.min.js') }}"></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="{{ asset('/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('/js/jquery.slicknav.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/js/mixitup.min.js') }}"></script>
+    <script src="{{ asset('/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('/js/main.js') }}"></script>
+    <script src="{{ asset('js/ajax.js') }}"></script>
+    <script src="{{ asset('/js/price.js ') }}"></script>
+    <script src="{{ asset('/js/sort.js ') }}"></script>
     <script src="{{ asset('js/ajax.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
@@ -371,11 +364,27 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
     @if (Session::has('alert-success'))
-    <script>swal("Payment successful !", "{!! Session('alert-success') !!}", "success", {button: "Continue Shopping"});</script>
+    <script>
+    swal("Payment successful !", "{!! Session('alert-success') !!}", "success", {
+        button: "Continue Shopping"
+    });
+    </script>
     @endif
+
     @if(Session::has('receiveEmailSuccess'))
     <script>
-    swal("Thank you for subscribing !", "{!! Session::get('receiveEmailSuccess') !!}", "success", {button: "OK",})</script>
+    swal("Thank you for subscribing !", "{!! Session::get('receiveEmailSuccess') !!}", "success", {
+        button: "OK",
+    })
+    </script>
+    @endif
+
+    @if(Session::has('receiveEmailError'))
+    <script>
+    swal("Your email is already exits !", "{!! Session::get('receiveEmailError') !!}", "error", {
+        button: "OK",
+    })
+    </script>
     @endif
 
 </body>

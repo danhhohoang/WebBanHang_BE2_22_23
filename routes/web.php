@@ -44,3 +44,6 @@ Route::get('shopping-cart', [ProductController::class, 'getCart'])->name('shoppi
 //Transaction history
 Route::get('transaction-history', [ProductController::class, 'transactionHistory'])->name('transactionHistory');
 Route::get('transaction-detail/{id}', [ProductController::class, 'transactionDetail'])->name('transactionDetail');
+// Search
+Route::get('search', [ProductController::class, 'getSearch'])->name('search');
+
