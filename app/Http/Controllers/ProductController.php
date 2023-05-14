@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Models\Protype;
+
 use App\Cart;
-use Illuminate\Support\Facades\Session;
 use App\Models\Product;
+use App\Models\Protype;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -47,7 +48,7 @@ class ProductController extends Controller
             ]
         );
     }
-    function getSearch(Request $request)
+    public function getSearch(Request $request)
     {
         $url = $request->path();
         $type = explode('/', $url);
@@ -125,8 +126,8 @@ class ProductController extends Controller
                 'sort' => $ordersort,
             ]
         );
-}
-public function getAddToCart(Request $request, $id)
+    }
+    public function getAddToCart(Request $request, $id)
     {
         $product = Product::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
@@ -150,6 +151,51 @@ public function getAddToCart(Request $request, $id)
             'products' => $cart->items,
             'totalPrice' => $cart->totalPrice,
         ]);
+    }
+
+    public function addToCartDetailGrid(Request $request, $detailGrid, $id)
+    {
+        $product = Product::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->add($product, $product->id);
+        $request->session()->put('cart', $cart);
+
+        return view('user.cart');
+    }
+
+    public function addToCartMul(Request $request, $mul, $id, $quantity)
+    {
+        $product = Product::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->addToCartMulti($product, $product->id, $quantity);
+        $request->session()->put('cart', $cart);
+
+        return view('user.cart');
+    }
+
+    function product_detail($id)
+    {
+        //View product detail
+        $detail = Product::find($id);
+        $type = Product::select('protypes.name')->join('protypes', 'protypes.id', '=', 'products.type_id')
+            ->where('products.id', $id)
+            ->get()->toArray();
+        $products = Product::select('*', 'products.name AS product_name', 'products.id AS product_id')
+            ->leftJoin('protypes', 'protypes.id', '=', 'products.type_id')
+            ->where('featured', '=', '1')
+            ->orderBy('products.name', 'desc')
+            ->take(20)
+            ->get();
+       return view(
+            'shop-details',
+            [
+                'productDetail' => $detail,
+                'getType' => $type,
+                'getProducts' => $products,
+            ]
+        );
     }
     function drid(Request $request)
     {
@@ -248,8 +294,8 @@ public function getAddToCart(Request $request, $id)
                 'sort' => $ordersort,
             ]
         );
-
-    public function deleteItemCart(Request $request, $id)
+}
+ public function deleteItemCart(Request $request, $id)
     {
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $newCart = new Cart($oldCart);
@@ -262,5 +308,7 @@ public function getAddToCart(Request $request, $id)
         }
         return view('user.deleteCart');
     }
-}
 
+
+       
+}
