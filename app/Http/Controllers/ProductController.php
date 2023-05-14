@@ -151,8 +151,22 @@ public function getAddToCart(Request $request, $id)
             'totalPrice' => $cart->totalPrice,
         ]);
     }
+    public function deleteItemCart(Request $request, $id)
+    {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $newCart = new Cart($oldCart);
+        $newCart->deleteItem($id);
+
+        if (Count($newCart->items) > 0) {
+            $request->session()->put('cart', $newCart);
+        } else {
+            $request->session()->forget('cart');
+        }
+        return view('user.deleteCart');
+    }
     function drid(Request $request)
     {
+
         //Get product
         $url = $request->path();
         $type = explode('/', $url);
@@ -248,19 +262,6 @@ public function getAddToCart(Request $request, $id)
                 'sort' => $ordersort,
             ]
         );
-
-    public function deleteItemCart(Request $request, $id)
-    {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $newCart = new Cart($oldCart);
-        $newCart->deleteItem($id);
-
-        if (Count($newCart->items) > 0) {
-            $request->session()->put('cart', $newCart);
-        } else {
-            $request->session()->forget('cart');
-        }
-        return view('user.deleteCart');
-    }
 }
 
+}
