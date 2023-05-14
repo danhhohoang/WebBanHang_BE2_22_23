@@ -1,18 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Product;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use App\Models\Protype;
-
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     public function index(){
         
         //get all protype
-         $protype = Protype::all();
-    
+        $protype = Protype::all();
+
         //Get product to filter
         $products = Product::select('*', 'products.name AS product_name', 'products.id AS product_id')
             ->leftJoin('protypes', 'protypes.id', '=', 'products.type_id')
@@ -21,12 +21,17 @@ class ProductController extends Controller
             ->take(20)
             ->get();
 
+        //Get 10 new products
+        $get10Products = Product::orderBy('created_at', 'desc')->take(10)->get();
+       
+
         //return
         return view(
-            'user.index',
+            'User.index',
             [
                 'getProtypes' => $protype,
-                'getProducts' => $products,
+                'getProducts' => $products, 
+                'getNewProduct' => $get10Products,
             ]
         );
     
