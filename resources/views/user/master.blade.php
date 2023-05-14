@@ -33,7 +33,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="#"><img src="img/logo.png" alt=""></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
+                        <div class="header__top__right d-flex">
                             <div class="header__top__right__social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -118,8 +118,25 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                            <div class="header__top__right__auth d-flex">
+                                @if (Route::has('login'))
+                                    @auth
+                                        <a href="{{ url('/profile') }}"
+                                            class="text-sm text-gray-700 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
+                                        <a style="display: inline; padding-left: 5px;" href="{{ route('logout') }}">
+                                            <i class="fa fa-btn fa-sign-out"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('login') }}"
+                                            class="text-sm text-gray-700 dark:text-gray-500 underline">Log
+                                            in</a>
+
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}"
+                                                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                                        @endif
+                                    @endauth
+                                @endif
                             </div>
                         </div>
                     </div>
