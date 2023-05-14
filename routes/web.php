@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -25,5 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+//About us
+Route::get('/about-us', [PageControlleroller::class, 'about_us']);
 require __DIR__.'/auth.php';
+//Contact
+Route::get('/contact', [PageController::class, 'contact']);
