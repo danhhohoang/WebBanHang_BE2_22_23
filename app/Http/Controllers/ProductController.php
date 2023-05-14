@@ -37,7 +37,7 @@ class ProductController extends Controller
         $highPriceProducts = Product::select('*', DB::raw('price - price*sales/100 AS price_discount'))->orderBy('price_discount', 'desc')->take(6)->get();
         //return
         return view(
-            'User.index',
+            'user.index',
             [
                 'getProtypes' => $protype,
                 'getProducts' => $products,
@@ -174,10 +174,10 @@ class ProductController extends Controller
         return view('user.cart');
     }
 
-    function product_detail($id)
+    public function product_detail($id)
     {
         //View product detail
-        $detail = Product::find($id);
+        $detail = Product::findorFail($id);
         $type = Product::select('protypes.name')->join('protypes', 'protypes.id', '=', 'products.type_id')
             ->where('products.id', $id)
             ->get()->toArray();
@@ -188,7 +188,7 @@ class ProductController extends Controller
             ->take(20)
             ->get();
         return view(
-            'shop-details',
+            'user.shop-details',
             [
                 'productDetail' => $detail,
                 'getType' => $type,
