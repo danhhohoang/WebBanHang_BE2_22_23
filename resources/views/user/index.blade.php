@@ -47,7 +47,9 @@
                     <div class="featured__controls">
                         <ul>
                             <li class="active" data-filter="*">All</li>
-                          
+                            @foreach ($getProtypes as $value)
+                                <li data-filter=".type-<?php echo $value['id']; ?>"><?php echo $value['name']; ?></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
