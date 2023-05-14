@@ -53,4 +53,8 @@ Route::get('transaction-history', [ProductController::class, 'transactionHistory
 Route::get('transaction-detail/{id}', [ProductController::class, 'transactionDetail'])->name('transactionDetail');
 // Search
 Route::get('search', [ProductController::class, 'getSearch'])->name('search');
+//Get product by type_ID
+Route::get('/shop-grid/{typeid?}', [ProductController::class, 'drid']);
+// Xoa san pham ra gio hang
+Route::get('delete-to-cart/{id}', [ProductController::class, 'deleteItemCart']);
 
