@@ -45,7 +45,6 @@ Route::get('shopping-cart', [ProductController::class, 'getCart'])->name('shoppi
 // Add to cart form page ShopDetails and ShopGrid
 Route::get('{detailGrid?}/add-to-cart/{id}', [ProductController::class, 'addToCartDetailGrid'])->name('addToCart');
 Route::get('/shop-details/{id}', [ProductDetailsController::class, 'product_detail'])->name('shop.details');
-Route::get('/shop-details/{id}', [ProductController::class, 'product_detail']);
 Route::get('{mul?}/add-to-cart-mul/{id}/{quantity}', [ProductController::class, 'addToCartMul']);
 
 //Transaction history

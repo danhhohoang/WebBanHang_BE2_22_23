@@ -6,13 +6,13 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Vegetable’s Package</h2>
+                        <h2>{{ $getType[0]['name'] }}</h2>
                         <div class="breadcrumb__option">
                             <a href="{{ url('/') }}">Home</a>
                             <?php $type_id = '/shop-grid/' . $getType[0]['id']; ?>
                             <a href="{{ url($type_id) }}">{{ $getType[0]['name'] }}</a>
                             <span><?php if (strlen($productDetail->name) > 40) {
-                                echo substr($productDetail->name, 0, 20) . '...';
+                                echo substr($productDetail->name, 0, 40) . '...';
                             } else {
                                 echo $productDetail->name;
                             } ?></span>
