@@ -30,7 +30,7 @@
            $(".delete-cart").empty();
            $(".delete-cart").html(response);
            alertify.error('Delete items successfully');
-           location.reload();
+            location.reload();
            var proQty = $('.pro-qty');
            proQty.prepend('<span class="dec qtybtn">-</span>');
            proQty.append('<span class="inc qtybtn">+</span>');
