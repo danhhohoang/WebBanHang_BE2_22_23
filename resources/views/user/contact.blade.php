@@ -43,14 +43,30 @@
                     <h4>Open time</h4>
                     <div id="current-time"></div>
                     <p>07:00 am to 16:00 pm</p>
-                    <p id="hvn"></p>
+                    <p id="clock"></p>
                     <script>
-                var today = new Date();
-                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                document.getElementById("hvn").innerHTML = time;
-                </script>
+                    const clock = document.getElementById('clock');
+
+                    function checkTime(i) {
+                        if (i < 10) {
+                            i = "0" + i;
+                        }
+                        return i;
+                    }
+                    let v = () => {
+                        let d = new Date();
+                        let h = d.getHours();
+                        let m = d.getMinutes();
+                        let s = d.getSeconds();
+
+                        m = checkTime(m);
+                        s = checkTime(s);
+                        clock.innerHTML = h + ":" + m + ":" + s;
+                    }
+                    setInterval(v, 1000);
+                    </script>
                 </div>
-               
+
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 text-center">
                 <div class="contact__widget">
