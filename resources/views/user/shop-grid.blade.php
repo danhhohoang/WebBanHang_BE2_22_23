@@ -26,23 +26,42 @@
             <div class="row">
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
-                        <div class="sidebar__item">
-                            <h4>Price</h4>
-                            <div class="price-range-wrap">
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                    data-min="10" data-max="540">
-                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                    <form>
+                            <div class="sidebar__item">
+                                <h4>Price</h4>
+                                <div class="price-range-wrap">
+                                    <li data-min-type="data-min" id="MinProduct" class="hide"><?php if (isset($_GET['Min'])) {
+                                        echo $_GET['Min'];
+                                    } else {
+                                        echo 0;
+                                    } ?>
+                                    </li>
+                                    <li data-max-type="data-max" id="MaxProduct" class="hide"><?php if (isset($_GET['Max'])) {
+                                        echo $_GET['Max'];
+                                    } else {
+                                        echo $maxproduct;
+                                    } ?>
+                                    </li>
+                                    <li data-min-type="data-minn" id="minProducts" class="hide">
+                                        <?php echo $minproduct; ?>
+                                    </li>
+                                    <li data-min-type="data-maxx" id="maxProducts" class="hide">
+                                        <?php echo $maxproduct; ?>
+                                    </li>
+                                    <input type="hidden" name="Min" id="min" value="<?php echo 0; ?>">
+                                    <input type="hidden" name="Max" id="max" value="<?php echo $maxproduct; ?>">
+                                    <input type="hidden" name="field" id="field" value="<?php echo $field; ?>">
+                                    <input type="hidden" name="sort" id="sort" value="<?php echo $sort; ?>">
+                                    <div id="price_range"></div>
                                 </div>
-                                <div class="range-slider">
-                                    <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
-                                    </div>
-                                </div>
+                                <p class="price_show" id="price_show"><?php if (isset($_GET['Min']) && isset($_GET['Max'])) {
+                                    echo "$" . $_GET['Min'] . " - $" . $_GET['Max'];
+                                } else {
+                                    echo "$" . $minproduct . " - $" . $maxproduct;
+                                } ?></p>
+                                <input class="btn-filter" type="submit" value="Filter" name="">
                             </div>
-                        </div>                      
+                        </form>                  
                         <div class="sidebar__item">
                             <div class="latest-product__text">
                                 <h4>Latest Products</h4>
