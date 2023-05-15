@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
-                    <form>
+                        <form>
                             <div class="sidebar__item">
                                 <h4>Price</h4>
                                 <div class="price-range-wrap">
@@ -61,53 +61,112 @@
                                 } ?></p>
                                 <input class="btn-filter" type="submit" value="Filter" name="">
                             </div>
-                        </form>                  
-                        <div class="sidebar__item">
-                            <div class="latest-product__text">
-                                <h4>Latest Products</h4>
-                                <div class="latest-product__slider owl-carousel">
-                                    <div class="latest-prdouct__slider__item">
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-1.jpg" alt="">
+                        </form>
+                    </div>
+                    <div class="sidebar__item d-none d-md-block">
+                        <div class="latest-product__text">
+                            <h4>Latest Products</h4>
+                            <div class="latest-product__slider owl-carousel">
+                                <div class="latest-prdouct__slider__item">
+                                    <?php $count = 1; ?>
+                                    @foreach ($getLatestProduct as $row)
+                                        <?php
+                                        $count++;
+                                        $img = '/img/product/' . $row->image1;
+                                        $id = '/shop-details/' . $row->id;
+                                        ?>
+                                        <a href="{{ URL($id) }}" class="latest-product__item">
+                                            <div class="latest-product__item__pic small_item">
+                                                <img src="{{ URL::asset($img) }}" alt="">
+                                                <?php if ($row->sales > 0) :?>
+                                                <div class="product__discount__percent">-{{ $row->sales }}%</div>
+                                                <?php endif ?>
                                             </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
+                                            <div class="latest-product__item__text product__discount__item__text text-left">
+                                                <h6><?php if (strlen($row->name) > 25) {
+                                                    echo substr($row->name, 0, 25) . '...';
+                                                } else {
+                                                    echo $row->name;
+                                                } ?>
+                                                </h6>
+                                                <div class="product__item__price text-dark font-weight-bold">
+                                                    <?php if ($row->sales > 0) :
+                                        $moneySales = $row['price'] * $row['sales'] / 100;
+                                        $moneySales = $row['price'] - $moneySales;
+                                    ?>
+                                                    $<?php echo number_format($moneySales, 2, '.', ''); ?>
+                                                    <br>
+                                                    <span class="ml-0">$<?php echo number_format($row['price'], 2, '.', ''); ?></span>
+                                                    <?php else : ?>
+                                                    $<?php echo number_format($row['price'], 2, '.', ''); ?>
+                                                    <?php endif ?>
+                                                </div>
                                             </div>
                                         </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-2.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-3.jpg" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>Crab Pool Security</h6>
-                                                <span>$30.00</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    
-                                </div>
+                                        <?php if($count > 3) { ?>
+                                    @break
+
+                                    <?php } ?>
+                                @endforeach
                             </div>
+                            <div class="latest-prdouct__slider__item">
+                                <?php $count = 1; ?>
+                                @foreach ($getLatestProduct as $row)
+                                    <?php
+                                    $count++;
+                                    if ($count < 5) {
+                                    ?>
+                                    @continue
+                                    <?php
+                                    }
+                                    $img = "/img/product/" . $row->image1;
+                                    $id =  '/shop-details/' . $row->id;
+                                ?>
+                                    <a href="{{ URL($id) }}" class="latest-product__item">
+                                        <div class="latest-product__item__pic small_item">
+                                            <img src="{{ URL::asset($img) }}" alt="">
+                                            <?php if ($row->sales > 0) :?>
+                                            <div class="product__discount__percent">-{{ $row->sales }}%</div>
+                                            <?php endif ?>
+                                        </div>
+                                        <div class="latest-product__item__text product__discount__item__text text-left">
+                                            <h6><?php if (strlen($row->name) > 25) {
+                                                echo substr($row->name, 0, 25) . '...';
+                                            } else {
+                                                echo $row->name;
+                                            } ?>
+                                            </h6>
+                                            <div class="product__item__price text-dark font-weight-bold">
+                                                <?php if ($row->sales > 0) :
+                                        $moneySales = $row['price'] * $row['sales'] / 100;
+                                        $moneySales = $row['price'] - $moneySales;
+                                    ?>
+                                                $<?php echo number_format($moneySales, 2, '.', ''); ?>
+                                                <br>
+                                                <span class="ml-0">$<?php echo number_format($row['price'], 2, '.', ''); ?></span>
+                                                <?php else : ?>
+                                                $<?php echo number_format($row['price'], 2, '.', ''); ?>
+                                                <?php endif ?>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <?php if($count > 6) { ?>
+                                @break
+
+                                <?php } ?>
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-7">
-                    <div class="product__discount">
-                        <div class="section-title product__discount__title">
-                            <h2>Sale Off</h2>
-                        </div>
-                        <div class="row">
-                        <div class="product__discount__slider owl-carousel">
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-7">
+            <div class="product__discount">
+                <div class="section-title product__discount__title">
+                    <h2>Sale Off</h2>
+                </div>
+                <div class="row">
+                    <div class="product__discount__slider owl-carousel">
                         @foreach ($saleOff as $value)
                             <?php
                             $img = '/img/product/' . $value->image1;
@@ -146,12 +205,26 @@
                             </div>
                         @endforeach
                     </div>
-                        </div>
-                    </div>
-                    <div class="filter__item">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-5">
-                                <div class="filter__sort">
+                </div>
+            </div>
+            @if (count($getProducts) == '0')
+                <div style="padding-left: 180px;font-size: 20px">
+                    <span>Sorry, OGANI did not find any results matching your price
+                        <strong>{{ $min }}-{{ $max }}</strong>
+                    </span>
+                    <ul>
+                        <li>Check the spelling of the entered price</li>
+                        <li>Try again with another price</li>
+                        <li>Try again with shorter price</li>
+                    </ul>
+                </div>
+            @else
+                <div class="filter__item">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="filter__sort text-center">
+                                <form>
+                                    @csrf
                                     <span>Sort By</span>
                                     <select id="sort" name="sort"
                                         onchange="this.options[this.selectedIndex].value && (window.location=this.options[this.selectedIndex].value);">
@@ -200,22 +273,21 @@
                                                 }
                                             } ?>>Name ⬆</option>
                                     </select>
-                                </div>
+                                    <div style="clear:both;"></div>
+                                </form>
                             </div>
-                            <div class="col-lg-4 col-md-4">
-                                <div class="filter__found">
-                                    <h6><span>16</span> Products found</h6>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-3">
-                                <div class="filter__option">
-                                    <span class="icon_grid-2x2"></span>
-                                    <span class="icon_ul"></span>
-                                </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+
+                        </div>
+                        <div class="col-lg-4 col-md-3">
+                            <div class="filter__found">
+                                <h6><span><?php echo count($countAllProduct); ?></span> Products found</h6>
                             </div>
                         </div>
                     </div>
-                    <div class="row pric">
+                </div>
+                <div class="row pric">
                     @foreach ($getProducts as $value)
                         <?php
                         $img = '/img/product/' . $value->image1;
@@ -257,9 +329,8 @@
                 </div>
                 <hr>
                 {{ $getProducts->onEachSide(1)->appends(request()->all())->links('vendor.pagination.my-paginate') }}
-                </div>
-            </div>
         </div>
-    </section>
+        @endif
+    </div>
     <!-- Product Section End -->
 @endsection
