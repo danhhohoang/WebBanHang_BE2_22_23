@@ -130,19 +130,40 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
-                        <div class="header__top__right__auth">
-                                @if (Auth::guest())
-                                    <a href="{{ route('login') }}"><i class="fa fa-user"></i>
-                                        {{ __('Login') }}</a>
-                                @else
-                                    <i class="fa fa-user-o"></i>
-                                    <a style="display: inline" href="{{ route('view-account') }}">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
-                                    </a>
-                                    <a style="display: inline; padding-left: 5px;" href="{{ route('logout') }}">
-                                        <i class="fa fa-btn fa-sign-out"></i>
-                                    </a>
+                        <div class="header__top__right d-flex">
+                        <div class="header__top__right__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            </div>
+                            <div class="header__top__right__language">
+                                <img src="img/language.png" alt="">
+                                <div>English</div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li><a href="#">Spanis</a></li>
+                                    <li><a href="#">English</a></li>
+                                </ul>
+                            </div>
+                        <div class="header__top__right__auth d-flex">
+                        @if (Route::has('login'))
+                                    @auth
+                                        <a href="{{ url('/profile') }}"
+                                            class="text-sm text-gray-700 dark:text-gray-500 underline">{{ Auth::user()->name }}</a>
+                                        <a style="display: inline; padding-left: 5px;" href="{{ route('logout') }}">
+                                            <i class="fa fa-btn fa-sign-out"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('login') }}"
+                                            class="text-sm text-gray-700 dark:text-gray-500 underline">Log
+                                            in</a>
+
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}"
+                                                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                                        @endif
+                                    @endauth
                                 @endif
                             </div>
                         </div>
@@ -163,7 +184,7 @@
                             <li <?php if ($nameURL == "index.php") { ?> class="active" <?php } ?>><a
                                     href="{{ url('/') }}">Home</a></li>
                             <li <?php if ($nameURL == "shop-grid") { ?> class="active" <?php } ?>><a
-                                    href="{}">Shop</a></li>
+                                    href="{{url('/shop-grid')}}">Shop</a></li>
                             <li <?php if ($nameURL == "about-us") { ?> class="active" <?php } ?>><a
                                     href="{}">About Us</a></li>
                             <li <?php if ($nameURL == "contact") { ?> class="active" <?php } ?>><a

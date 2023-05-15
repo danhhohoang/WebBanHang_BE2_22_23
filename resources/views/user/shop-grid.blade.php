@@ -28,21 +28,6 @@
                     <div class="sidebar">
                         <div class="sidebar__item">
                             <h4>Price</h4>
-                            <ul>
-                                <li><a href="#">Fresh Meat</a></li>
-                                <li><a href="#">Vegetables</a></li>
-                                <li><a href="#">Fruit & Nut Gifts</a></li>
-                                <li><a href="#">Fresh Berries</a></li>
-                                <li><a href="#">Ocean Foods</a></li>
-                                <li><a href="#">Butter & Eggs</a></li>
-                                <li><a href="#">Fastfood</a></li>
-                                <li><a href="#">Fresh Onion</a></li>
-                                <li><a href="#">Papayaya & Crisps</a></li>
-                                <li><a href="#">Oatmeal</a></li>
-                            </ul>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Price</h4>
                             <div class="price-range-wrap">
                                 <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
                                     data-min="10" data-max="540">
@@ -57,34 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="sidebar__item">
-                            <h4>Popular Size</h4>
-                            <div class="sidebar__item__size">
-                                <label for="large">
-                                    Large
-                                    <input type="radio" id="large">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__size">
-                                <label for="medium">
-                                    Medium
-                                    <input type="radio" id="medium">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__size">
-                                <label for="small">
-                                    Small
-                                    <input type="radio" id="small">
-                                </label>
-                            </div>
-                            <div class="sidebar__item__size">
-                                <label for="tiny">
-                                    Tiny
-                                    <input type="radio" id="tiny">
-                                </label>
-                            </div>
-                        </div>
+                        </div>                      
                         <div class="sidebar__item">
                             <div class="latest-product__text">
                                 <h4>Latest Products</h4>
@@ -176,9 +134,52 @@
                             <div class="col-lg-4 col-md-5">
                                 <div class="filter__sort">
                                     <span>Sort By</span>
-                                    <select>
-                                        <option value="0">Default</option>
-                                        <option value="0">Default</option>
+                                    <select id="sort" name="sort"
+                                        onchange="this.options[this.selectedIndex].value && (window.location=this.options[this.selectedIndex].value);">
+                                        <option
+                                            value="{{ Request::url() }}?<?php
+                                            if (isset($_GET['Min']) && isset($_GET['Max'])) {
+                                                echo 'Min=' . $_GET['Min'] . '&Max=' . $_GET['Max'] . '&';
+                                            } else {
+                                            } ?>field=price&sort=desc"
+                                            <?php if (isset($_GET['field']) && isset($_GET['sort'])) {
+                                                if ($_GET['field'] === 'price' && $_GET['sort'] === 'desc') {
+                                                    echo ' selected';
+                                                }
+                                            } ?>>Price ⬇</option>
+                                        <option
+                                            value="{{ Request::url() }}?<?php
+                                            if (isset($_GET['Min']) && isset($_GET['Max'])) {
+                                                echo 'Min=' . $_GET['Min'] . '&Max=' . $_GET['Max'] . '&';
+                                            } else {
+                                            } ?>field=price&sort=asc"
+                                            <?php if (isset($_GET['field']) && isset($_GET['sort'])) {
+                                                if ($_GET['field'] === 'price' && $_GET['sort'] === 'asc') {
+                                                    echo ' selected';
+                                                }
+                                            } ?>>Price ⬆</option>
+                                        <option
+                                            value="{{ Request::url() }}?<?php
+                                            if (isset($_GET['Min']) && isset($_GET['Max'])) {
+                                                echo 'Min=' . $_GET['Min'] . '&Max=' . $_GET['Max'] . '&';
+                                            } else {
+                                            } ?>field=products.name&sort=desc"
+                                            <?php if (isset($_GET['field']) && isset($_GET['sort'])) {
+                                                if ($_GET['field'] === 'products.name' && $_GET['sort'] === 'desc') {
+                                                    echo ' selected';
+                                                }
+                                            } ?>>Name ⬇</option>
+                                        <option
+                                            value="{{ Request::url() }}?<?php
+                                            if (isset($_GET['Min']) && isset($_GET['Max'])) {
+                                                echo 'Min=' . $_GET['Min'] . '&Max=' . $_GET['Max'] . '&';
+                                            } else {
+                                            } ?>field=products.name&sort=asc"
+                                            <?php if (isset($_GET['field']) && isset($_GET['sort'])) {
+                                                if ($_GET['field'] === 'products.name' && $_GET['sort'] === 'asc') {
+                                                    echo ' selected';
+                                                }
+                                            } ?>>Name ⬆</option>
                                     </select>
                                 </div>
                             </div>
