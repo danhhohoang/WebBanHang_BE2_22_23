@@ -332,4 +332,13 @@ class ProductController extends Controller
             }
         }
     }
+    public function transactionHistory()
+    {
+        $protypes = Protype::all();
+        $items = DB::table('orders')->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
+        return view('user.transaction-history', [
+            'getProtypes' => $protypes,
+            'items' => $items
+        ]);
+    }
 }
