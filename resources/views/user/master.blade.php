@@ -186,7 +186,7 @@
                             <li <?php if ($nameURL == "shop-grid") { ?> class="active" <?php } ?>><a
                                     href="{{url('/shop-grid')}}">Shop</a></li>
                             <li <?php if ($nameURL == "about-us") { ?> class="active" <?php } ?>><a
-                                    href="{}">About Us</a></li>
+                                    href="{{ url('/about-us') }}">About Us</a></li>
                             <li <?php if ($nameURL == "contact") { ?> class="active" <?php } ?>><a
                                     href="{{ url('/contact') }}">Contact</a></li>
                         </ul>
@@ -268,21 +268,55 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
+                                <h5>0838970023</h5>
                                 <span>support 24/7 time</span>
                             </div>
                         </div>
                     </div>
                     <?php if ($nameURL == "index.php") {
                     ?>
-                        <div class="hero__item set-bg" data-setbg="{{ asset('/img/hero/banner.jpg') }}">
-                            <div class="hero__text">
-                                <span>FRUIT FRESH</span>
-                                <h2>Vegetable <br />100% Organic</h2>
-                                <p>Free Pickup and Delivery Available</p>
-                                <a href="#" class="primary-btn">SHOP NOW</a>
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="d-block w-100" alt="...">
+                                <div class="hero__item set-bg" data-setbg="{{ asset('/img/hero/banner.jpg') }}">
+                                     <div class="hero__text">
+                                    <span>FRUIT FRESH</span>
+                                    <h2>Vegetable <br />100% Organic</h2>
+                                    <p>Free Pickup and Delivery Available</p>
+                                    <a href="{{ url('shop-grid') }}" class="primary-btn">SHOP NOW</a>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-block w-100" alt="...">
+                            <div class="hero__item set-bg" data-setbg="{{ asset('/img/hero/bannerMeat.jpg') }}">
+                                <div class="hero__text">
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-block w-100" alt="...">
+                            <div class="hero__item set-bg" data-setbg="{{ asset('/img/hero/bannerdrink.jpg') }}">
+                                <div class="hero__text">
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-block w-100" alt="...">
+                            <div class="hero__item set-bg" data-setbg="{{ asset('/img/hero/banner-traicay.jpg') }}">
+                                <div class="hero__text">
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     <?php
                     } ?>
                 </div>
@@ -303,9 +337,9 @@
                             <a href="{{ url('/') }}"><img src="{{ asset('/img/logo.png') }}" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: <a class="text-dark" href="https://www.google.com/maps/place/60-49 Road 11378 New York" target="_blank">60-49 Road 11378 New York</a></li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
+                            <li>Address: <a class="text-dark" href="https://goo.gl/maps/XXX7zqQCaFKL9DoQ6" target="_blank">53 Võ Văn Ngân - Phường Linh Chiểu - Quận Thủ Đức - TP.HCM</a></li>
+                            <li>Phone: 0838970023</li>
+                            <li>Email: Backend2.2022@gmail.com</li>
                         </ul>
                     </div>
                 </div>

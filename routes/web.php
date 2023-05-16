@@ -56,4 +56,5 @@ Route::get('search', [ProductController::class, 'getSearch'])->name('search');
 Route::get('/shop-grid/{typeid?}', [ProductController::class, 'drid']);
 // Xoa san pham ra gio hang
 Route::get('delete-to-cart/{id}', [ProductController::class, 'deleteItemCart']);
-
+//About us
+Route::get('/about-us', [PageController::class, 'about_us']);
