@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('email_newsletter', function (Blueprint $table) {
+        Schema::create('newsletters', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('subject');
-            $table->string('action');
-            $table->string('body');
-            $table->timestamp('date')->useCurrent();
+            $table->string('email');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('email_newsletter');
+        Schema::dropIfExists('newsletters');
     }
 };
