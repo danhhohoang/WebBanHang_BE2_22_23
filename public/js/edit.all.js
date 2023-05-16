@@ -1,4 +1,3 @@
-   //Xoa tat ca san pham
 
    $(".edit-all").on("click", function() {
        var lists = [];
@@ -25,9 +24,10 @@
            alertify.warning('Update successfully');
        });
    });
-
    function updateQuantity(quantity) {
-       if (quantity != "") {
+        if (quantity == 0) {
+            console.log('khong co')
+        } else if (quantity != "") {
            console.log(quantity);
        }
    }
