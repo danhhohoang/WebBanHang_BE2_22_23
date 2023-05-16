@@ -32,7 +32,7 @@ class PageController extends Controller
 
         //return
         return view(
-            'about-us',
+            'user.about-us',
             [
                 'getProtypes' => $protype,
             ]
