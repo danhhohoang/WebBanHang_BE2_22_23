@@ -87,10 +87,67 @@
                             </div>
                         </div>
                     </div>
+                   
                 @endforeach
-
+              
             </div>
-
+            {{ $getProducts->onEachSide(1)->appends(request()->all())->links('vendor.pagination.my-paginate') }}
+           
+    </section>
+    <section class="saleoff">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__discount">
+                        <div class="section-title">
+                            <h2>Sale Off</h2>
+                        </div>
+                        <div class="row">
+                            <div class="product__discount__slider owl-carousel">
+                                @foreach ($saleOff as $value)
+                                    <?php
+                                    $img = '/img/product/' . $value->image1;
+                                    $id = '/shop-details/' . $value->product_id;
+                                    ?>
+                                    <div class="col-lg-4">
+                                        <div class="product__discount__item">
+                                            <div class="product__discount__item__pic set-bg"
+                                                data-setbg="{{ asset($img) }}">
+                                                <div class="product__discount__percent">-{{ $value->sales }}%</div>
+                                                <ul class="product__item__pic__hover">
+                                                    <li><a onclick="AddCart({{ $value->product_id }})"
+                                                            href="javascript:"><i class="fa fa-shopping-cart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__discount__item__text">
+                                                <span>{{ $value->name }}</span>
+                                                <h5><a href="{{ URL($id) }}"><?php if (strlen($value->product_name) > 25) {
+                                                    echo substr($value->product_name, 0, 25) . '...';
+                                                } else {
+                                                    echo $value->product_name;
+                                                } ?></a>
+                                                </h5>
+                                                <div class="product__item__price">
+                                                    <?php if ($value->sales > 0) :
+                                                $moneySales = $value['price'] * $value['sales'] / 100;
+                                                $moneySales = $value['price'] - $moneySales;
+                                            ?>
+                                                    $<?php echo number_format($moneySales, 2, '.', ''); ?><span>$<?php echo number_format($value['price'], 2, '.', ''); ?></span>
+                                                    <?php else : ?>
+                                                    $<?php echo number_format($value['price'], 2, '.', ''); ?>
+                                                    <?php endif ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
     </section>
     <!-- Featured Section End -->
 
@@ -99,20 +156,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="img/banner/banner-1.jpg" alt="">
+                    <a href="{{ url('shop-grid')}}">
+                        <div class="banner__pic">
+                        <img src="{{ asset('/img/banner/banner-1.jpg') }}" alt="">
                     </div>
+                    </a>
+                    
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="img/banner/banner-2.jpg" alt="">
+                    <a href="{{ url('shop-grid')}}">
+                        <div class="banner__pic">
+                        <img src="{{ asset('/img/banner/banner-2.jpg') }}" alt="">
                     </div>
+                    </a>
+                    
                 </div>
             </div>
         </div>
     </div>
     <!-- Banner End -->
-
+   
+ 
     <!-- Latest Product Section Begin -->
     <section class="latest-product spad">
         <div class="container">
@@ -413,60 +477,60 @@
 <!-- Blog Section Begin -->
 <section class="from-blog spad">
 <div class="container">
-<div class="row">
-<div class="col-lg-12">
-<div class="section-title from-blog__title">
-<h2>From The Blog</h2>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-lg-4 col-md-4 col-sm-6">
-<div class="blog__item">
-<div class="blog__item__pic">
-    <img src="img/blog/blog-1.jpg" alt="">
-</div>
-<div class="blog__item__text">
-    <ul>
-        <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-        <li><i class="fa fa-comment-o"></i> 5</li>
-    </ul>
-    <h5><a href="#">Cooking tips make cooking simple</a></h5>
-    <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-</div>
-</div>
-</div>
-<div class="col-lg-4 col-md-4 col-sm-6">
-<div class="blog__item">
-<div class="blog__item__pic">
-    <img src="img/blog/blog-2.jpg" alt="">
-</div>
-<div class="blog__item__text">
-    <ul>
-        <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-        <li><i class="fa fa-comment-o"></i> 5</li>
-    </ul>
-    <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-    <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-</div>
-</div>
-</div>
-<div class="col-lg-4 col-md-4 col-sm-6">
-<div class="blog__item">
-<div class="blog__item__pic">
-    <img src="img/blog/blog-3.jpg" alt="">
-</div>
-<div class="blog__item__text">
-    <ul>
-        <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-        <li><i class="fa fa-comment-o"></i> 5</li>
-    </ul>
-    <h5><a href="#">Visit the clean farm in the US</a></h5>
-    <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-</div>
-</div>
-</div>
-</div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="section-title from-blog__title">
+                <h2>From The Blog</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="blog__item">
+                <div class="blog__item__pic">
+                    <img src="img/blog/blog-1.jpg" alt="">
+                </div>
+                <div class="blog__item__text">
+                    <ul>
+                        <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                        <li><i class="fa fa-comment-o"></i> 5</li>
+                    </ul>
+                    <h5><a href="#">Cooking tips make cooking simple</a></h5>
+                    <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="blog__item">
+                <div class="blog__item__pic">
+                    <img src="img/blog/blog-2.jpg" alt="">
+                </div>
+                <div class="blog__item__text">
+                    <ul>
+                        <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                        <li><i class="fa fa-comment-o"></i> 5</li>
+                    </ul>
+                    <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
+                    <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="blog__item">
+                <div class="blog__item__pic">
+                    <img src="img/blog/blog-3.jpg" alt="">
+                </div>
+                <div class="blog__item__text">
+                    <ul>
+                        <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                        <li><i class="fa fa-comment-o"></i> 5</li>
+                    </ul>
+                    <h5><a href="#">Visit the clean farm in the US</a></h5>
+                    <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </section>
 <!-- Blog Section End -->

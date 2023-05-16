@@ -22,8 +22,9 @@ class ProductController extends Controller
             ->leftJoin('protypes', 'protypes.id', '=', 'products.type_id')
             ->where('featured', '=', '1')
             ->orderBy('products.name', 'desc')
-            ->take(20)
-            ->get();
+            ->paginate(8);
+
+
 
         //Get 10 new products
         $get10Products = Product::orderBy('created_at', 'desc')->take(10)->get();
@@ -35,6 +36,13 @@ class ProductController extends Controller
 
         //Get high price produts
         $highPriceProducts = Product::select('*', DB::raw('price - price*sales/100 AS price_discount'))->orderBy('price_discount', 'desc')->take(6)->get();
+        //Get sale off
+        $saleOff = Product::select('*', 'products.name AS product_name', 'products.id AS product_id')
+            ->leftJoin('protypes', 'protypes.id', '=', 'products.type_id')
+            ->where('sales', '>', '0')
+            ->orderBy('sales', 'desc')
+            ->take(9)
+            ->get();
         //return
         return view(
             'user.index',
@@ -45,6 +53,7 @@ class ProductController extends Controller
                 'getLatestProduct' => $latestProduts,
                 'getLowPriceProduct' => $lowPriceProducts,
                 'getHighPriceProduct' => $highPriceProducts,
+                'saleOff' => $saleOff,
             ]
         );
     }
