@@ -164,5 +164,19 @@ public function getAddToCart(Request $request, $id)
         }
         return view('user.deleteCart');
     }
+    public function saveAllItemCart(Request $request)
+    {
+        foreach ($request->data as $item) {
+            if ($item['value'] == 0) {
+                // If the quantity is 0, delete the item from the cart
+                $this->deleteItemCart($request, $item['key']);
+            } else {
+                // Otherwise, update the quantity of the item in the cart
+                $oldCart = Session('cart') ?  Session('cart') : null;
+                $newCart = new Cart($oldCart);
+                $newCart->updateAllCart($item['key'], $item['value']);
+                $request->Session()->put('cart', $newCart);
+            }
+        }
+    }
 }
-
