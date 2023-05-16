@@ -393,8 +393,20 @@ ol {
 	padding: 5px 10px;
 }
 
+.login-mb::after {
+    position: absolute;
+    right: 42.5px;
+    top: 24px;
+    height: 20px;
+    width: 1px;
+    background: #000000;
+    opacity: 0.25;
+    content: "";
+}
+
 .header__top__right__auth {
 	display: inline-block;
+	position: relative;
 }
 
 .header__top__right__auth a {
