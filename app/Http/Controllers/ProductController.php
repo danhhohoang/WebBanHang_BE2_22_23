@@ -22,7 +22,8 @@ class ProductController extends Controller
             ->leftJoin('protypes', 'protypes.id', '=', 'products.type_id')
             ->where('featured', '=', '1')
             ->orderBy('products.name', 'desc')
-            ->paginate(8);
+            ->take(20)
+            ->get();
 
 
 
@@ -339,6 +340,20 @@ class ProductController extends Controller
         return view('user.transaction-history', [
             'getProtypes' => $protypes,
             'items' => $items
+        ]);
+    }
+    public function transactionDetail($order_id)
+    {
+
+        $protypes = Protype::all();
+
+        $orderProducts = DB::table('orders_list')->join('products', 'product_id', '=', 'id')->where('order_id', $order_id)->get();
+
+
+        // dd($orderProducts);
+        return view('user.transaction-detail', [
+            'getProtypes' => $protypes,
+            'orderProducts' => $orderProducts
         ]);
     }
 }
