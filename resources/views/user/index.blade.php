@@ -91,7 +91,7 @@
                 @endforeach
               
             </div>
-            {{ $getProducts->onEachSide(1)->appends(request()->all())->links('vendor.pagination.my-paginate') }}
+          
            
     </section>
     <section class="saleoff">
