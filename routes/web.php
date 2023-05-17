@@ -60,3 +60,6 @@ Route::get('delete-to-cart/{id}', [ProductController::class, 'deleteItemCart']);
 Route::post('save-all', [ProductController::class, 'saveAllItemCart']);
 //About us
 Route::get('/about-us', [PageController::class, 'about_us']);
+//Checkout
+Route::get('checkout', [ProductController::class, 'checkOut'])->name('checkOut');
+Route::post('save-checkout', [ProductController::class, 'saveCheckOut'])->name('saveCheckOut');

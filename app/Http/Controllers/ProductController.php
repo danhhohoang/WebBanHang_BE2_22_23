@@ -332,6 +332,45 @@ class ProductController extends Controller
             }
         }
     }
+    public function checkOut()
+    {
+        $protypes = Protype::all();
+        return view('user.checkout', [
+            'getProtypes' => $protypes,
+        ]);
+    }
+    public function saveCheckOut(Request $request)
+    {
+        $currentTime = date('Y-m-d H:i:s');
+        $auth = auth()->user()->name;
+        $data = array();
+        $data['user_id'] = auth()->user()->id;
+        $data['email'] = $request->email;
+        $data['address'] = $request->address;
+        $data['phone'] = $request->phone;
+        $data['order_date'] = $currentTime;
+        $data['username'] = $request->username;
+        if ($data['total_money'] = Session::get('cart')->totalPrice > 99) {
+            $data['total_money'] = Session::get('cart')->totalPrice;
+        } else {
+            $data['total_money'] = Session::get('cart')->totalPrice + 10;
+        }
+        $id = DB::table('orders')->insertGetId($data);
+        Session::put('id', $id);
+
+        foreach ((array) Session::get('cart')->items as $product) {
+            $data = array();
+            $data['order_id'] = $id;
+            $data['product_id'] = $product['item']->id;
+            $data['quantity'] = $product['qty'];
+
+            $data['price'] = $product['price'];
+            DB::table('orders_list')->insertGetId($data);
+        }
+        $request->session()->forget('cart');
+
+        return redirect('/transaction-history')->with('alert-success', 'Thank you for your purchase');;
+    }
     public function transactionHistory()
     {
         $protypes = Protype::all();
