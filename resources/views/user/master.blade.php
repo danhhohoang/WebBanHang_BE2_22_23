@@ -360,7 +360,7 @@
                                 <li><a href="">My Account</a></li>
                             </ul>
                             <ul>
-                                <li><a href="">Shopping Cart</a></li>
+                                <li><a href="{{route('shoppingCart')}}">Shopping Cart</a></li>
                                 <li><a href="{{ url('/checkout') }}">Checkout</a></li>
                             </ul>
                         </div>

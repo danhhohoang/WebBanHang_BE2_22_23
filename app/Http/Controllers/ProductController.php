@@ -28,6 +28,8 @@ class ProductController extends Controller
             ->take(20)
             ->get();
 
+
+
         //Get 10 new products
         $get10Products = Product::orderBy('created_at', 'desc')->take(10)->get();
 
@@ -38,6 +40,13 @@ class ProductController extends Controller
 
         //Get high price produts
         $highPriceProducts = Product::select('*', DB::raw('price - price*sales/100 AS price_discount'))->orderBy('price_discount', 'desc')->take(6)->get();
+        //Get sale off
+        $saleOff = Product::select('*', 'products.name AS product_name', 'products.id AS product_id')
+            ->leftJoin('protypes', 'protypes.id', '=', 'products.type_id')
+            ->where('sales', '>', '0')
+            ->orderBy('sales', 'desc')
+            ->take(9)
+            ->get();
         //return
         return view(
             'user.index',
@@ -48,6 +57,7 @@ class ProductController extends Controller
                 'getLatestProduct' => $latestProduts,
                 'getLowPriceProduct' => $lowPriceProducts,
                 'getHighPriceProduct' => $highPriceProducts,
+                'saleOff' => $saleOff,
             ]
         );
     }
@@ -312,6 +322,7 @@ class ProductController extends Controller
         return view('user.deleteCart');
     }
 
+
     //newsletter
     public function storeEmail(Request $request){
         Newsletter::create(['email'=> $request->email]);
@@ -331,3 +342,83 @@ class ProductController extends Controller
         return back();
     }
 }
+
+    public function saveAllItemCart(Request $request)
+    {
+        foreach ($request->data as $item) {
+            if ($item['value'] == 0) {
+                // If the quantity is 0, delete the item from the cart
+                $this->deleteItemCart($request, $item['key']);
+            } else {
+                // Otherwise, update the quantity of the item in the cart
+                $oldCart = Session('cart') ?  Session('cart') : null;
+                $newCart = new Cart($oldCart);
+                $newCart->updateAllCart($item['key'], $item['value']);
+                $request->Session()->put('cart', $newCart);
+            }
+        }
+    }
+    public function checkOut()
+    {
+        $protypes = Protype::all();
+        return view('user.checkout', [
+            'getProtypes' => $protypes,
+        ]);
+    }
+    public function saveCheckOut(Request $request)
+    {
+        $currentTime = date('Y-m-d H:i:s');
+        $auth = auth()->user()->name;
+        $data = array();
+        $data['user_id'] = auth()->user()->id;
+        $data['email'] = $request->email;
+        $data['address'] = $request->address;
+        $data['phone'] = $request->phone;
+        $data['order_date'] = $currentTime;
+        $data['username'] = $request->username;
+        if ($data['total_money'] = Session::get('cart')->totalPrice > 99) {
+            $data['total_money'] = Session::get('cart')->totalPrice;
+        } else {
+            $data['total_money'] = Session::get('cart')->totalPrice + 10;
+        }
+        $id = DB::table('orders')->insertGetId($data);
+        Session::put('id', $id);
+
+        foreach ((array) Session::get('cart')->items as $product) {
+            $data = array();
+            $data['order_id'] = $id;
+            $data['product_id'] = $product['item']->id;
+            $data['quantity'] = $product['qty'];
+
+            $data['price'] = $product['price'];
+            DB::table('orders_list')->insertGetId($data);
+        }
+        $request->session()->forget('cart');
+
+        return redirect('/transaction-history')->with('alert-success', 'Thank you for your purchase');;
+    }
+    public function transactionHistory()
+    {
+        $protypes = Protype::all();
+        $items = DB::table('orders')->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
+        return view('user.transaction-history', [
+            'getProtypes' => $protypes,
+            'items' => $items
+        ]);
+    }
+    public function transactionDetail($order_id)
+    {
+
+        $protypes = Protype::all();
+
+        $orderProducts = DB::table('orders_list')->join('products', 'product_id', '=', 'id')->where('order_id', $order_id)->get();
+
+
+        // dd($orderProducts);
+        return view('user.transaction-detail', [
+            'getProtypes' => $protypes,
+            'orderProducts' => $orderProducts
+        ]);
+    }
+}
+
