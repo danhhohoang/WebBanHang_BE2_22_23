@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDetailsController;
@@ -58,3 +59,5 @@ Route::get('/shop-grid/{typeid?}', [ProductController::class, 'drid']);
 Route::get('delete-to-cart/{id}', [ProductController::class, 'deleteItemCart']);
 //About us
 Route::get('/about-us', [PageController::class, 'about_us']);
+//newsletter
+Route::post('/newsletter', [ProductController::class,'storeEmail'])->name('email.store');
