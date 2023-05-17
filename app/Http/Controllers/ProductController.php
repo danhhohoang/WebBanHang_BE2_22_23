@@ -341,7 +341,7 @@ class ProductController extends Controller
         }
         return back();
     }
-}
+
 
     public function saveAllItemCart(Request $request)
     {
