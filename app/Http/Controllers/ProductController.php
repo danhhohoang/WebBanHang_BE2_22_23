@@ -16,7 +16,6 @@ class ProductController extends Controller
 {
     public function index()
     {
-
         //get all protype
         $protype = Protype::all();
 
@@ -421,4 +420,3 @@ class ProductController extends Controller
         ]);
     }
 }
-
