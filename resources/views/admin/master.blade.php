@@ -44,7 +44,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('/index') }}" class="nav-link">Home</a>
+                    <a href="{{ url('/dashboard') }}" class="nav-link">Home</a>
                 </li>
             </ul>
 
@@ -190,7 +190,7 @@
                         </li>
                         @endforeach
                         <li class="nav-item">
-                            <a href="#" class="nav-link <?php if($nameURL == "orders" || $nameURL == "") echo "active" ?>">
+                            <a href="{{ route('admin-view-orders')}}" class="nav-link <?php if($nameURL == "orders" || $nameURL == "") echo "active" ?>">
                                 <i class="nav-icon fa fa-shopping-basket"></i>
                                 <p>
                                     Orders
@@ -204,16 +204,7 @@
                                     Rating
                                 </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link <?php if($nameURL == "email-newsletter" || $nameURL == "send-all-email") echo "active" ?>">
-                                <i class="nav-icon fa fa-envelope"></i>
-                                <p>
-                                    Email Newsletter
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
+                        </li>                      
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
