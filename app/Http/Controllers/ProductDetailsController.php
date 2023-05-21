@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Protype;
 use Illuminate\Support\Facades\DB;
-
+use SocialLinks\Page;
 class ProductDetailsController extends Controller
 {
     public function product_detail($id)
@@ -20,6 +20,17 @@ class ProductDetailsController extends Controller
         $type = Product::select('protypes.name', 'protypes.id')->join('protypes', 'protypes.id', '=', 'products.type_id')
             ->where('products.id', $id)
             ->get()->toArray();
+
+        // Share Social Network
+        $url = "http://oganishop.site/shop-details/" . $detail->image1;
+        $image = "http://oganishop.site/img/product".$detail->image1;
+        $socialShare = \Share::page($url, $detail->name)
+            ->facebook()
+            ->twitter()
+            ->telegram()
+            ->pinterest()
+            ->getRawLinks();
+
 //Related product
         $relatedProduct = Product::select('*', 'products.name AS product_name', 'products.id AS product_id')
             ->leftJoin('protypes', 'protypes.id', '=', 'products.type_id')
@@ -38,7 +49,7 @@ class ProductDetailsController extends Controller
                     'getProtypes' => $protype,
                     'productDetail' => $detail,
                     'getType' => $type,
-                    // 'shareSocial' => $socialShare,
+                    'shareSocial' => $socialShare,
                     'getRelatedProduct' => $relatedProduct,
                     // 'ratingAvg' => $ratingAvg,
                     // 'countRating' => $countRating,
@@ -54,7 +65,7 @@ class ProductDetailsController extends Controller
                     'getProtypes' => $protype,
                     'productDetail' => $detail,
                     'getType' => $type,
-                    // 'shareSocial' => $socialShare,
+                    'shareSocial' => $socialShare,
                     'getRelatedProduct' => $relatedProduct,
                     // 'ratingAvg' => $ratingAvg,
                     // 'countRating' => $countRating,
