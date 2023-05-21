@@ -61,8 +61,8 @@
                     <div class="navbar-search-block">
                         <form class="form-inline">
                             <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="search"
-                                    aria-label="search" name="search">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                                    aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" type="submit">
                                         <i class="fas fa-search"></i>
@@ -91,7 +91,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{ url('/index') }}" class="brand-link">
+            <a href="{{ url('/dashboard') }}" class="brand-link">
                 <img src="{{ asset('Admin/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">AdminLTE 3</span>
@@ -190,7 +190,7 @@
                         </li>
                         @endforeach
                         <li class="nav-item">
-                            <a href="{{ route('admin-view-orders')}}" class="nav-link <?php if($nameURL == "orders" || $nameURL == "") echo "active" ?>">
+                            <a href="#" class="nav-link <?php if($nameURL == "orders" || $nameURL == "") echo "active" ?>">
                                 <i class="nav-icon fa fa-shopping-basket"></i>
                                 <p>
                                     Orders
@@ -206,7 +206,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('email-letter')}}" class="nav-link <?php if($nameURL == "email-newsletter" || $nameURL == "send-all-email") echo "active" ?>">
+                            <a href="#" class="nav-link <?php if($nameURL == "email-newsletter" || $nameURL == "send-all-email") echo "active" ?>">
                                 <i class="nav-icon fa fa-envelope"></i>
                                 <p>
                                     Email Newsletter

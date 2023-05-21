@@ -106,7 +106,7 @@ Route::delete('/index/email-newsletter/{email}', [EmailController::class, 'destr
 Route::get('/index/protype', [AdminProtypeController::class, 'protype'])->name('admin.listprotype');
 
 //add protype
-Route::post('/index/protype/add', [AdminProtypeController::class, 'add'])->name('admin.addprotype');
+Route::post('//protype/add', [AdminProtypeController::class, 'add'])->name('admin.addprotype');
 
 //get from add protype
 Route::get('/index/protype/addprotype', function () {
