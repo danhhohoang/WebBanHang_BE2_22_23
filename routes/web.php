@@ -26,8 +26,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [ProductController::class, 'index'])->name('index');
+Route::get('/index', [DashboardController::class, 'index'])->middleware(['auth', 'verified', 'isAdmin'])->name('dashboard');
 
-Route::get('/index', [DashboardController::class, 'index'])->middleware(['auth', 'verified', 'isAdmin'])->name('index');
+
 
 Route::get('logout', function () {
     auth()->logout();
@@ -189,3 +190,6 @@ Route::post('/newsletter', [ProductController::class,'storeEmail'])->name('email
 //Checkout
 Route::get('checkout', [ProductController::class, 'checkOut'])->name('checkOut');
 Route::post('save-checkout', [ProductController::class, 'saveCheckOut'])->name('saveCheckOut');
+//Search user
+// Search
+Route::get('search', [ProductController::class, 'getSearch'])->name('search');
