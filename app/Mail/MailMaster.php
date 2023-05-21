@@ -5,8 +5,8 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
+// use Illuminate\Mail\Mailables\Content;
+// use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class MailMaster extends Mailable
@@ -16,7 +16,7 @@ class MailMaster extends Mailable
      /**
      * The order instance.
      *
-     * @var \App\Models\Newsletter
+
      */
     public $credentials;
 
@@ -35,24 +35,22 @@ class MailMaster extends Mailable
      *
      * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function envelope()
-    {
-        return new Envelope(
-            subject: 'Mail Master',
-        );
-    }
+    // public function envelope()
+    // {
+    //     return new Envelope(
+    //         subject: 'Mail Master',
+    //     );
+    // }
 
     /**
      * Get the message content definition.
      *
-     * @return \Illuminate\Mail\Mailables\Content
+     * @return $this
      */
-    public function content()
+    public function build()
     {
         $detail = $this->credentials;
-        return new Content(
-            view: 'view.name',
-        );
+        return $this->subject($detail['subject'])->view('mails.email_template',compact('detail'));
     }
 
     /**

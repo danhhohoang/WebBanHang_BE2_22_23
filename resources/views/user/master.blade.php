@@ -333,6 +333,38 @@
 
         @yield('content')
 
+
+        <!-- Messenger Plugin chat Code -->
+        <div id="fb-root"></div>
+
+        <!-- Your Plugin chat code -->
+        <div id="fb-customer-chat" class="fb-customerchat">
+        </div>
+
+        <script>
+            var chatbox = document.getElementById('fb-customer-chat');
+            chatbox.setAttribute("page_id", "100411846398322");
+            chatbox.setAttribute("attribution", "biz_inbox");
+        </script>
+
+        <!-- Your SDK code -->
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    xfbml: true,
+                    version: 'v16.0'
+                });
+            };
+
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
         <!-- Footer Section Begin -->
         <footer class="footer spad">
             <div class="container">
@@ -360,7 +392,7 @@
                                 <li><a href="">My Account</a></li>
                             </ul>
                             <ul>
-                                <li><a href="">Shopping Cart</a></li>
+                                <li><a href="{{ route('shoppingCart') }}">Shopping Cart</a></li>
                                 <li><a href="{{ url('/checkout') }}">Checkout</a></li>
                             </ul>
                         </div>
@@ -369,7 +401,7 @@
                         <div class="footer__widget">
                             <h6>Join Our Newsletter Now</h6>
                             <p>Get E-mail updates about our latest shop and special offers.</p>
-                            <form action="{}" method="post">
+                            <form action="{{ route('email.store') }}" method="POST">
                                 @csrf
                                 <input type="email" name="email" placeholder="Enter your mail" required>
                                 <button type="submit" class="site-btn">Subscribe</button>
@@ -416,6 +448,7 @@
         <script src="{{ asset('js/ajax.js') }}"></script>
         <script src="{{ asset('/js/price.js ') }}"></script>
         <script src="{{ asset('/js/sort.js ') }}"></script>
+        <script src="{{ asset('/js/share.js') }}"></script>
         <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
