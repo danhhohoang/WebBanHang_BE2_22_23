@@ -68,7 +68,7 @@ Route::get('/index/new-orders', [DashboardController::class, 'path_vienewOder'])
 Route::get('/index/email-newsletter', [EmailController::class, 'getAllEmails'])->name('email-letter');
 //get from add user
 Route::get('/index/user/adduser', function () {
-    return view('Admin.admin-addUser');
+    return view('admin.admin-addUser');
 })->name('user.add');
 
 //get from edit user
