@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Mail\MailMaster;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
@@ -16,5 +17,5 @@ class EmailController extends Controller
             'email' => $email
         ];
         Mail::to($email)->send( new MailMaster($credentials));
-    }
+    }  
 }

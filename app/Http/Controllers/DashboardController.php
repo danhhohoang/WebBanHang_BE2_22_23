@@ -12,7 +12,7 @@ class DashboardController extends Controller
     function index() {
         $product = Product::all();
 
-        $emails = DB::Table('email_newsletter')->get();
+        // $emails = DB::Table('email_newsletters')->get();
             
         $orders = DB::Table('orders')->get();
 
@@ -25,7 +25,7 @@ class DashboardController extends Controller
         }
         return view('admin.index',[
             'product' => $product,
-            'emails' => $emails,
+            // 'emails' => $emails,
             'orders' => $orders,
             'newsOrder' => $newsOrder,
             'dataChart' => $data,
