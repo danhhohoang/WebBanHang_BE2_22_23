@@ -49,7 +49,6 @@ Route::get('shopping-cart', [ProductController::class, 'getCart'])->name('shoppi
 Route::get('delete-to-cart/{id}', [ProductController::class, 'deleteItemCart']);
 //Cap nhat tat ca san pham
 Route::post('save-all', [ProductController::class, 'saveAllItemCart']);
-// -----------------------------------------------------------------------------------------
 //Checkout
 Route::get('checkout', [ProductController::class, 'checkOut'])->name('checkOut');
 Route::post('save-checkout', [ProductController::class, 'saveCheckOut'])->name('saveCheckOut');
@@ -124,7 +123,7 @@ Route::delete('user/{user}', [AdminUser::class, 'destroy'])->name('admin.user');
 
 //add user
 Route::post('user/add', [AdminUser::class, 'add'])->name('admin.adduser');
-//View rating of admin
+  
 //View rating of admin
 Route::get('rating', [AdminRatingController::class, 'index'])->name('admin-view-rating');
 
