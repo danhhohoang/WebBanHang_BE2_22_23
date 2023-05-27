@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
-                        <h3>{{ $productDetail->name}}</h3>
+                        <h3>{{ $productDetail->name }}</h3>
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -109,7 +109,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                    aria-selected="false">Reviews <span>(1)</span></a>
+                                    aria-selected="false">Reviews <span>({{ $countRating }})</span></a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -127,24 +127,113 @@
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
+                                    <nav>
+                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                            <button class="nav-link active" id="nav-home-tab" data-toggle="tab"
+                                                data-target="#nav-home" type="button" role="tab"
+                                                aria-controls="nav-home" aria-selected="true">Comment with
+                                                Customer</button>
+                                            <button class="nav-link" id="nav-profile-tab" data-toggle="tab"
+                                                data-target="#nav-profile" type="button" role="tab"
+                                                aria-controls="nav-profile" aria-selected="false">Comment with
+                                                Facebook</button>
+                                        </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                            aria-labelledby="nav-home-tab">
+                                            @foreach ($getRating as $infoRating)
+                                                <div class="size-207 comment-container" style="background: #eff7f9">
+                                                    <div class="flex-w flex-sb-m p-b-17">
+                                                        <span class="mtext-107 cl2 p-r-20" style="font-weight:600px ">
+                                                            By: {{ $infoRating->name }} <i style="color: #7fad39"
+                                                                class="fa-solid fa-circle-check"></i> <span
+                                                                style="color:#7fad39"> Made a purchase </span>
+                                                            <span>{{ date('d-m-Y', strtotime($infoRating->date)) }}</span>
+
+                                                        </span> <br>
+                                                        <span class="star" style="color: #edbb0e;">
+                                                            <?php $count = 1; ?>
+                                                            @while ($count <= $infoRating->rating_value)
+                                                                <i class="fa fa-star"></i>
+                                                                <?php $count++; ?>
+                                                            @endwhile
+                                                        </span>
+                                                    </div>
+                                                    <p class="stext-102 cl6">
+                                                        {{ $infoRating->comment }}
+                                                    </p>
+                                                </div>
+                                            @endforeach
+                                            {{ $getRating->onEachSide(1)->appends(request()->all())->links('vendor.pagination.my-paginate') }}
+                                            <div>
+                                                @if (Auth::guest())
+                                                    <h5>Please login and purchase to rate the product</h5>
+                                                @else
+                                                    <div class="stars">
+                                                        @if ($checkPurchase->count() > 0)
+                                                            <form action="{{ url('/add-rating') }}" method="POST">
+                                                                @csrf
+
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $productDetail->id }}">
+                                                                <div style="display: inline-block">
+                                                                    <input class="star star-1" id="star-1"
+                                                                        value="1" type="radio" name="star" />
+                                                                    <label class="star star-1" for="star-1"></label>
+                                                                    <input class="star star-2" id="star-2"
+                                                                        value="2" type="radio" name="star" />
+                                                                    <label class="star star-2" for="star-2"></label>
+                                                                    <input class="star star-3" id="star-3"
+                                                                        value="3" type="radio" name="star" />
+                                                                    <label class="star star-3" for="star-3"></label>
+                                                                    <input class="star star-4" id="star-4"
+                                                                        value="4" type="radio" name="star" />
+                                                                    <label class="star star-4" for="star-4"></label>
+                                                                    <input class="star star-5" id="star-5"
+                                                                        value="5" type="radio" checked
+                                                                        name="star" />
+                                                                    <label class="star star-5" for="star-5"></label>
+                                                                </div>
+
+                                                                <div>
+                                                                    <div class="form-group">
+                                                                        <textarea class="form-control" name="review" placeholder="Enter your review" required maxlength="200"></textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div>
+                                                                    <input class="btn btn-large" type="submit"
+                                                                        name="submit" value="Send"
+                                                                        style="background:#7fad39;color:white" />
+                                                                </div>
+
+                                                            </form>
+                                                        @else
+                                                            <h5>You are not eligible to review this product</h5>
+                                                            <p>For the trusthworthiness of the reviews, only customers who
+                                                                purchased
+                                                                the product can write a review about the product</p>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                            aria-labelledby="nav-profile-tab">
+                                            <div class="fb-comments"
+                                                data-href="{{ asset('/shop-grid/' . $productDetail->id) }}"
+                                                data-width="100%" data-numposts="5"></div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
     <!-- Product Details Section End -->

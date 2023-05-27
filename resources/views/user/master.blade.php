@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -126,7 +126,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="header__top__left">
                                 <ul>
-                                    <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                                    <li><i class="fa fa-envelope"></i> Backend2.2023@gmail.com</li>
                                     <li>Free Shipping for all Order of $99</li>
                                 </ul>
                             </div>
@@ -379,7 +379,7 @@
                                 <li>Address: <a class="text-dark" href="https://goo.gl/maps/XXX7zqQCaFKL9DoQ6"
                                         target="_blank">53 Võ Văn Ngân - Phường Linh Chiểu - Quận Thủ Đức - TP.HCM</a></li>
                                 <li>Phone: 0838970023</li>
-                                <li>Email: Backend2.2022@gmail.com</li>
+                                <li>Email: Backend2.2023@gmail.com</li>
                             </ul>
                         </div>
                     </div>
@@ -433,7 +433,9 @@
         <!-- Footer Section End -->
 
         <!-- Js Plugins -->
-        <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0"
+            nonce="Sbxcw3Mm"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
