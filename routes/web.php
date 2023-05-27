@@ -56,6 +56,8 @@ Route::post('save-checkout', [ProductController::class, 'saveCheckOut'])->name('
 //Transaction history
 Route::get('transaction-history', [ProductController::class, 'transactionHistory'])->name('transactionHistory');
 Route::get('transaction-detail/{id}', [ProductController::class, 'transactionDetail'])->name('transactionDetail');
+
+
 Route::prefix('/dashboard')->middleware('auth', 'isAdmin')->group(function () {
     //View all orders of Admin
     Route::get('orders', [OrdersController::class, 'index'])->name('admin-view-orders');
@@ -171,6 +173,9 @@ Route::get('shopping-cart', [ProductController::class, 'getCart'])->name('shoppi
 Route::get('{detailGrid?}/add-to-cart/{id}', [ProductController::class, 'addToCartDetailGrid'])->name('addToCart');
 Route::get('/shop-details/{id}', [ProductDetailsController::class, 'product_detail'])->name('shop.details');
 Route::get('{mul?}/add-to-cart-mul/{id}/{quantity}', [ProductController::class, 'addToCartMul']);
+
+//ratings
+Route::post('add-rating', [ProductDetailsController::class, 'addRating']);
 //Transaction history
 Route::get('transaction-history', [ProductController::class, 'transactionHistory'])->name('transactionHistory');
 Route::get('transaction-detail/{id}', [ProductController::class, 'transactionDetail'])->name('transactionDetail');
